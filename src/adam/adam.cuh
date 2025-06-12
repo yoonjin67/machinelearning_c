@@ -28,7 +28,7 @@ __device__ double proba_prediction(
     
 }
 
-__global__ void gradientKernel(
+__global__ void gradient_kernel(
     double *samples,
     int   *y_true,
     double *weights, 
@@ -52,7 +52,7 @@ __global__ void gradientKernel(
 }
 
 
-__global__ void binaryCrossentropy(
+__global__ void binary_crossentropy(
     double *samples,
     int    *y_true,
     double *weights,

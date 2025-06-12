@@ -333,7 +333,7 @@ int main(int argc, char* argv[]) {
             CUDA_CHECK(cudaMemset(d_total_loss, 0, sizeof(double)));
 
             // 6.1. Launch gradient calculation kernel
-            gradientKernel<<<blocks_samples, THREADS_PER_BLOCK>>>(
+            gradient_kernel<<<blocks_samples, THREADS_PER_BLOCK>>>(
                 d_train_samples, d_train_y_true, d_weights, d_bias_ptr,
                 NUM_TRAIN_SAMPLES, NUM_FEATURES, d_gradient_weights, d_gradient_bias_ptr
             );
@@ -354,7 +354,7 @@ int main(int argc, char* argv[]) {
                 double current_bias_value_on_host = 0.0;
                 CUDA_CHECK(cudaMemcpy(&current_bias_value_on_host, d_bias_ptr, sizeof(double), cudaMemcpyDeviceToHost));
 
-                binaryCrossentropy<<<blocks_samples, THREADS_PER_BLOCK>>>(
+                binary_crossentropy<<<blocks_samples, THREADS_PER_BLOCK>>>(
                     d_train_samples, d_train_y_true, d_weights, current_bias_value_on_host,
                     NUM_TRAIN_SAMPLES, NUM_FEATURES, d_total_loss
                 );
